@@ -1,0 +1,22 @@
+name: MobMeat
+main: me.shzylo.mobmeat.MobMeat
+author: Shzylo
+website: http://shzylogames.elementfx.com/
+version: 0.1
+
+commands:
+
+  mobmeat:
+    description: Reload MobMeat
+    permission: mobmeat.reload
+    aliases: [mobm, mmeat, mm]
+    
+permissions:
+
+  mobmeat.reload:
+    description: allows you to reload MobMeat
+    default: op
+    
+  mobmeat.sulphur:
+    description: allows a player to have sulphur as an explosive
+    default: true
