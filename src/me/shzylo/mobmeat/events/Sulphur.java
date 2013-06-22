@@ -18,18 +18,6 @@ import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-/* =====
- * Sulphur Features:
- * - Explosive.
- * - Requires different amounts of sulphur,
- * depending on how strong the block is.
- * - Add Lore.
- * - Possibly have a custom explosion size?
- * =====
- * TODO:
- * - Not blow up minerals.
- */
-
 public class Sulphur implements Listener {
 
   MobMeat plugin;
