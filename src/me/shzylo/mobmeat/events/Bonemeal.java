@@ -26,15 +26,6 @@ import org.bukkit.material.Crops;
 import org.bukkit.material.Dispenser;
 import org.bukkit.material.Tree;
 
-/* =====
- * Bonemeal Features:
- * - Dropped by Skeleton
- * - 1-click to grow a plant / tree again!
- * =====
- * TODO:
- * - Add Lore
- */
-
 public class Bonemeal implements Listener {
 
   MobMeat plugin;
