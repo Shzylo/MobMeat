@@ -1,0 +1,26 @@
+##-- SULPHUR --##
+
+# Allow sulphur to make explosions?
+sulphur-explosive: true
+
+##-- BONEMEAL --##
+
+# Enabled bone meal to be dropped by skeletons?
+drop-bonemeal: true
+
+# What is the chance of a skeleton dropping bone meal?
+# only works if 'drop-bonemeal' is true.
+# set at '1' to always have it drop bone meal
+bonemeal-drop-chance: 3
+
+# Allow plants to grow in one click?
+bonemeal-one-growth: true
+
+##-- SPIDEREYE --#
+
+# Enable eating a spider eye to have a new effect?
+new-eat-effect: true
+
+# Allow fermented spider eye to have a new crafting recipe?
+# (4 spider eyes to make a fermented spider eye, as a square)
+craft-spidereye: true
