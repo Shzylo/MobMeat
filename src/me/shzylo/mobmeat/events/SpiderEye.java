@@ -12,15 +12,6 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-/* =====
- * SpiderEye Features:
- * - Craft in 2x2 square to make fermented.
- * - Creates slow effect when ate.
- * =====
- * TODO:
- * - Add Lore.
- */
-
 public class SpiderEye implements Listener {
 
   MobMeat plugin;
