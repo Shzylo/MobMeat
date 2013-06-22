@@ -23,10 +23,10 @@ import org.bukkit.inventory.ItemStack;
  * - Explosive.
  * - Requires different amounts of sulphur,
  * depending on how strong the block is.
- * =====
- * TODO:
  * - Add Lore.
  * - Possibly have a custom explosion size?
+ * =====
+ * TODO:
  * - Not blow up minerals.
  */
 
