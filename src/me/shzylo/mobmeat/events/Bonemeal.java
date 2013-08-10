@@ -4,6 +4,7 @@ import java.util.Random;
 
 import me.shzylo.mobmeat.MobMeat;
 
+import org.bukkit.ChatColor;
 import org.bukkit.CropState;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -13,6 +14,7 @@ import org.bukkit.TreeType;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Skeleton;
 import org.bukkit.event.EventHandler;
@@ -26,28 +28,45 @@ import org.bukkit.material.Crops;
 import org.bukkit.material.Dispenser;
 import org.bukkit.material.Tree;
 
+/* =====
+ * Bonemeal Features:
+ * - Dropped by Skeleton
+ * - 1-click to grow a plant / tree again!
+ * =====
+ */
+
 public class Bonemeal implements Listener {
 
-  MobMeat plugin;
+	MobMeat plugin;
+
+	boolean enabledGrowth, skeletonDrops;
 
 	public Bonemeal(MobMeat instance) {
 		this.plugin = instance;
+		enabledGrowth = plugin.getConfig().getBoolean("bonemeal-one-growth", true);
+		skeletonDrops = plugin.getConfig().getBoolean("drop-bonemeal", true);
+	}
+	
+	public void getInfo(CommandSender s) {
+		if(enabledGrowth) {
+			s.sendMessage("");
+			s.sendMessage(ChatColor.AQUA + "" + ChatColor.BOLD + "BONEMEAL");
+			s.sendMessage("- " + ChatColor.LIGHT_PURPLE + "Grow plants and trees in one click again! (Along with Dispensers)");
+			s.sendMessage("- " + ChatColor.LIGHT_PURPLE + "Skeletons drop bonemeal!");
+		} else
+			s.sendMessage(ChatColor.GREEN + "" + ChatColor.ITALIC + "This Feature is currently off");
 	}
 
 	@EventHandler
 	public void onSkeletonDeath(EntityDeathEvent event) {
 		int dropRate = plugin.getConfig().getInt("bonemeal-drop-chance", 3);
 
-		boolean enabled = false;
-		if (plugin.getConfig().getBoolean("drop-bonemeal", true) == true)
-			enabled = true;
-
 		Entity skeleton = event.getEntity();
 		boolean isSkeleton = skeleton instanceof Skeleton;
 		World skeletonDeathWorld = skeleton.getWorld();
 		Location skeletonLocation = skeleton.getLocation();
 
-		if (enabled) {
+		if (skeletonDrops) {
 			Random r = new Random();
 
 			int drop = r.nextInt(dropRate);
@@ -62,19 +81,15 @@ public class Bonemeal implements Listener {
 		}
 	}
 
-	/*
+	/**
 	 * Upcoming code by: tills13 ~ Thank you so much!
 	 */
 
 	@EventHandler
 	public void onRightClickCrops(PlayerInteractEvent e) {
-		boolean enabled = false;
-		if (plugin.getConfig().getBoolean("bonemeal-one-growth", true) == true)
-			enabled = true;
-		
 		ItemStack i = e.getItem();
 
-		if (enabled) {
+		if (skeletonDrops) {
 			if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
 				if (i != null) {
 					byte bonemeal = e.getItem().getData().getData();
@@ -137,33 +152,36 @@ public class Bonemeal implements Listener {
 		Block relative = block.getRelative(face);
 		ItemStack item = e.getItem();
 
-		if (item.getData().getData() == 15) {
-			if (relative.getType().equals(Material.CROPS) || relative.getType().equals(Material.POTATO)
-					|| relative.getType().equals(Material.CARROT)) {
-				growCrop(new Crops(relative.getTypeId(), relative.getData()), relative);
-			} else if (relative.getType().equals(Material.SAPLING)) {
-				Tree tree = new Tree(relative.getTypeId(), relative.getData());
-				TreeSpecies t = tree.getSpecies();
+		if (enabledGrowth) {
 
-				TreeType type = null;
-				if (t.equals(TreeSpecies.BIRCH)) {
-					type = TreeType.BIRCH;
-				} else if (t.equals(TreeSpecies.JUNGLE)) {
-					generateJungleTree(relative);
-				} else if (t.equals(TreeSpecies.REDWOOD)) {
-					type = TreeType.REDWOOD;
-				} else {
-					if (Math.random() > 0.5) {
-						type = TreeType.BIG_TREE;
+			if (item.getData().getData() == 15) {
+				if (relative.getType().equals(Material.CROPS) || relative.getType().equals(Material.POTATO)
+						|| relative.getType().equals(Material.CARROT)) {
+					growCrop(new Crops(relative.getTypeId(), relative.getData()), relative);
+				} else if (relative.getType().equals(Material.SAPLING)) {
+					Tree tree = new Tree(relative.getTypeId(), relative.getData());
+					TreeSpecies t = tree.getSpecies();
+
+					TreeType type = null;
+					if (t.equals(TreeSpecies.BIRCH)) {
+						type = TreeType.BIRCH;
+					} else if (t.equals(TreeSpecies.JUNGLE)) {
+						generateJungleTree(relative);
+					} else if (t.equals(TreeSpecies.REDWOOD)) {
+						type = TreeType.REDWOOD;
 					} else {
-						type = TreeType.TREE;
+						if (Math.random() > 0.5) {
+							type = TreeType.BIG_TREE;
+						} else {
+							type = TreeType.TREE;
+						}
 					}
-				}
 
-				if (!t.equals(TreeSpecies.JUNGLE)) {
-					relative.setType(Material.AIR);
-					if (!relative.getWorld().generateTree(relative.getLocation(), type)) {
-						relative.setType(Material.SAPLING);
+					if (!t.equals(TreeSpecies.JUNGLE)) {
+						relative.setType(Material.AIR);
+						if (!relative.getWorld().generateTree(relative.getLocation(), type)) {
+							relative.setType(Material.SAPLING);
+						}
 					}
 				}
 			}
