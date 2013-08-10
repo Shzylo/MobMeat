@@ -3,18 +3,36 @@
 # Allow sulphur to make explosions?
 sulphur-explosive: true
 
-##-- BONEMEAL --##
+# Specify this number as 1 or 2 for it to work
+# They do not have much of a significant explosion size difference.
+# Only works if 'sulphur-explosive' is enabled.0
+explosion-size: 1
 
-# Enabled bone meal to be dropped by skeletons?
-drop-bonemeal: true
+# How many pieces of sulphur does it take to make an explosion?
+# Better when you specify a larger explosion size
+mining-amount: 1
 
-# What is the chance of a skeleton dropping bone meal?
-# only works if 'drop-bonemeal' is true.
-# set at '1' to always have it drop bone meal
-bonemeal-drop-chance: 3
+# How long to wait before the player can blow the ground up again?
+# (used to reduce griefers)
+mining-delay: 1
 
-# Allow plants to grow in one click?
-bonemeal-one-growth: true
+# Deal damage when right-clicking the type of entity.
+damage-animals: false
+damage-monsters: true
+damage-players: true
+
+# ignite animals/monsters/players when right clicked?
+# only works when the damage is enabled.
+ignite-animals: false
+ignite-monsters: false
+ignite-players: false
+
+# How many pieces of sulphur does it take to attack an entity?
+# Better when you have a high damage amount
+attack-amount: 1
+
+# How much damage do entities take?
+sulphur-damage: 3
 
 ##-- SPIDEREYE --#
 
@@ -24,3 +42,16 @@ new-eat-effect: true
 # Allow fermented spider eye to have a new crafting recipe?
 # (4 spider eyes to make a fermented spider eye, as a square)
 craft-spidereye: true
+
+#-- BONEMEAL --##
+
+# Enabled bone meal to be dropped by skeletons?
+drop-bonemeal: true
+
+# What is the chance of a skeleton dropping bone meal?
+# only works if 'drop-bonemeal' is true.
+# set at '1' to always have it drop bone meal
+bonemeal-drop-chance: 3
+
+# Allow plants to grow in one click? (Includes dispensers)
+bonemeal-one-growth: true
