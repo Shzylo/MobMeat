@@ -1,17 +1,21 @@
 name: MobMeat
 main: me.shzylo.mobmeat.MobMeat
-author: Shzylo
+authors: [Shzylo]
 website: http://shzylogames.elementfx.com/
-version: 0.1
+version: 0.2
 
 commands:
-
   mobmeat:
     description: Reload MobMeat
-    permission: mobmeat.reload
     aliases: [mobm, mmeat, mm]
     
 permissions:
+  mobmeat.*:
+    description: all MobMeat commands
+    default: op
+    children:
+      mobmeat.reload: true
+      mobmeat.sulphur: true
 
   mobmeat.reload:
     description: allows you to reload MobMeat
